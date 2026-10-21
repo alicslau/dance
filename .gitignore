@@ -1,0 +1,29 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# 数据库（本地数据，不提交）
+*.db
+*.sqlite3
+
+# Node / 前端依赖与构建产物
+node_modules/
+dist/
+
+# Umi 生成文件
+.umi/
+.umi-production/
+
+# 环境变量
+.env
+.env.local
+.env.*.local
+
+# 日志
+*.log
+npm-debug.log*
