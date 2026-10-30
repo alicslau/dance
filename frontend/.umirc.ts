@@ -11,6 +11,7 @@ export default defineConfig({
     { path: '/register', component: 'register', title: '登记' },
     { path: '/list', component: 'list', title: '列表' },
     { path: '/match', component: 'match', title: '匹配' },
+    { path: '/manage', component: 'manage', title: '管理' },
   ],
   npmClient: 'npm',
   // 浏览器本机调试时，把 /api 转发到后端

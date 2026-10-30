@@ -85,6 +85,14 @@ def list_persons(db: Session = Depends(get_db)):
     return [_to_dict(p) for p in rows]
 
 
+@app.delete("/api/persons")
+def clear_persons(db: Session = Depends(get_db)):
+    count = db.query(models.Person).count()
+    db.query(models.Person).delete(synchronize_session=False)
+    db.commit()
+    return {"ok": True, "deleted": count}
+
+
 @app.delete("/api/persons/{pid}")
 def delete_person(pid: int, db: Session = Depends(get_db)):
     p = db.get(models.Person, pid)
@@ -93,6 +101,34 @@ def delete_person(pid: int, db: Session = Depends(get_db)):
     db.delete(p)
     db.commit()
     return {"ok": True}
+
+
+@app.put("/api/persons/{pid}")
+def update_person(pid: int, payload: schemas.PersonUpdate, db: Session = Depends(get_db)):
+    p = db.get(models.Person, pid)
+    if not p:
+        raise HTTPException(status_code=404, detail="未找到该人员")
+    data = payload.model_dump(exclude_unset=True)
+    if "name" in data:
+        data["name"] = (data["name"] or "").strip()
+    if "student_id" in data:
+        data["student_id"] = (data["student_id"] or "").strip() or None
+        if data["student_id"]:
+            dup = (
+                db.query(models.Person)
+                .filter(
+                    models.Person.student_id == data["student_id"],
+                    models.Person.id != pid,
+                )
+                .first()
+            )
+            if dup:
+                raise HTTPException(status_code=409, detail="该学号已被其他人员使用")
+    for k, v in data.items():
+        setattr(p, k, v)
+    db.commit()
+    db.refresh(p)
+    return _to_dict(p)
 
 
 @app.get("/api/stats")
@@ -143,5 +179,7 @@ def seed(db: Session = Depends(get_db)):
 
 
 if __name__ == "__main__":
+    import os
     import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=True)

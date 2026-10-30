@@ -61,6 +61,10 @@ export const api = {
     client.post<CreatePersonResult>('/persons', data).then((r) => r.data),
   deletePerson: (id: number) =>
     client.delete(`/persons/${id}`).then((r) => r.data),
+  updatePerson: (id: number, data: Partial<Person>) =>
+    client.put<Person>(`/persons/${id}`, data).then((r) => r.data),
+  clearPersons: () =>
+    client.delete<{ ok: boolean; deleted: number }>('/persons').then((r) => r.data),
   getStats: () => client.get<Stats>('/stats').then((r) => r.data),
   match: (params: MatchParams) =>
     client.post<MatchResult>('/match', params).then((r) => r.data),

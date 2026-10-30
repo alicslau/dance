@@ -5,6 +5,7 @@ import {
   AddCircleOutline,
   UnorderedListOutline,
   TeamOutline,
+  SetOutline,
 } from 'antd-mobile-icons';
 import '@/global.css';
 
@@ -26,6 +27,7 @@ export default function Layout() {
     { key: '/register', title: '登记', icon: <AddCircleOutline /> },
     { key: '/list', title: '列表', icon: <UnorderedListOutline /> },
     { key: '/match', title: '匹配', icon: <TeamOutline /> },
+    { key: '/manage', title: '管理', icon: <SetOutline /> },
   ];
 
   return (
