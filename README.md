@@ -88,7 +88,7 @@ npm run dev
 2. 把该地址发到手机（微信里点开、或用微信「扫一扫」识别二维码均可）。
 3. dev 模式下 `/api` 由电脑上的代理转发到后端，手机无需额外配置。
 
-**正式部署**：微信对外访问要求 HTTPS 域名。可 `cd frontend && npm run build` 生成静态文件（`dist/`），部署到任意 HTTPS 静态托管（Nginx、Vercel、对象存储等），后端用 `uvicorn` 部署并通过域名反代 `/api`，同时在 `frontend/.env` 设置 `UMI_APP_API_BASE` 指向后端域名后重新构建。
+**正式部署**：前端部署到 Vercel，后端部署到 Render。生产构建默认用 `frontend/src/config.ts` 里的 `PROD_API`（当前 `https://ruc-art-backend.onrender.com/api`），本地开发仍走 `frontend/.umirc.ts` 的 `/api` 代理；后端域名变了改 `config.ts`，或在 Vercel 项目里设 `UMI_APP_API_BASE` 环境变量覆盖。
 
 ## 接口一览
 
