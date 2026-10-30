@@ -12,3 +12,6 @@ services:
       # 数据库连接串不写进仓库；首次部署或控制台里手动填写 Neon 的 Postgres 连接串
       - key: DATABASE_URL
         sync: false
+      # 锁定 Python 版本（3.14 下 pydantic-core/psycopg2 无预编译 wheel，会触发源码编译失败）
+      - key: PYTHON_VERSION
+        value: 3.12.10
