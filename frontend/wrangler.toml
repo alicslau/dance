@@ -1,0 +1,3 @@
+# Cloudflare Pages 部署配置（静态站点，直接上传 dist）
+name = "ruc-art-frontend"
+pages_build_output_dir = "dist"
