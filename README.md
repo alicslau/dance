@@ -90,6 +90,8 @@ npm run dev
 
 **正式部署**：前端部署到 Vercel，后端部署到 Render。生产构建默认用 `frontend/src/config.ts` 里的 `PROD_API`（当前 `https://ruc-art-backend.onrender.com/api`），本地开发仍走 `frontend/.umirc.ts` 的 `/api` 代理；后端域名变了改 `config.ts`，或在 Vercel 项目里设 `UMI_APP_API_BASE` 环境变量覆盖。
 
+后端数据库用 Postgres（如 Neon）：在 Render 的 `ruc-art-backend` 服务 → Environment 里设置 `DATABASE_URL`（粘贴 Neon 连接串，`postgresql://` 或 `postgres://` 均可，代码会自动转成 psycopg2 驱动）。不设置则退回临时 SQLite，重启即丢数据。
+
 ## 接口一览
 
 | 方法 | 路径 | 说明 |
